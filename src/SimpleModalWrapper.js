@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 function getModalStyle() {
   const top = 50;
@@ -18,7 +20,7 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: 'absolute',
-    width: theme.spacing.unit * 50,
+
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
@@ -26,6 +28,11 @@ const styles = theme => ({
 });
 
 class SimpleModal extends React.Component {
+
+  handleClick = char => {
+    this.props.selectCharacter(char);
+    this.props.handleModalClose();
+  }
 
   render() {
     const { classes } = this.props;
@@ -35,16 +42,18 @@ class SimpleModal extends React.Component {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         open={this.props.open}
-        onClose={this.handleClose}
+        onClose={this.props.handleModalClose}
       >
         <div style={getModalStyle()} className={classes.paper}>
-          <Typography variant="title" id="modal-title">
-            Text in a modal
-          </Typography>
-          <Typography variant="subheading" id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            <button onClick={this.props.handleModalClose}> close </button>
-          </Typography>
+          <List component="nav">
+            {this.props.characters.map(c=>{
+              return (
+                <ListItem button key={c.name} >
+                  <ListItemText primary={c.name} onClick={()=>this.handleClick(c.name)}/>
+                </ListItem>
+              )
+            })}
+          </List>
         </div>
       </Modal>
     );

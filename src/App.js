@@ -3,17 +3,13 @@ import StatsGrid from './StatsGrid';
 import HeaderBar from './HeaderBar';
 import SimpleModalWrapper from './SimpleModalWrapper';
 
-import characters from './characters.json'
-
-
-
 class App extends Component {
   state = {
     modalOpen: false,
+    selectedCharacters: [],
   };
 
   handleModalOpen = () => {
-    console.log("open")
     this.setState({ modalOpen: true });
   };
 
@@ -21,8 +17,23 @@ class App extends Component {
     this.setState({ modalOpen: false });
   };
 
-  printChars = () => {
-    console.log(characters);
+  selectCharacter = char => {
+    //clone
+    let characters = this.state.characters.slice(0);
+    let removed = characters.splice(characters.findIndex(character => character.name === char), 1)
+    this.setState(prevState => ({
+      characters: characters,
+      selectedCharacters: [...prevState.selectedCharacters, removed[0]]
+    }));
+  }
+
+  componentWillMount = () => {
+    const chars = require('./characters.json').characters.sort((a, b)=>{
+      if(a.name < b.name) return -1;
+      if(a.name > b.name) return 1;
+      return 0;
+    });
+    this.setState({ characters: chars });
   }
 
   render() {
@@ -30,12 +41,12 @@ class App extends Component {
       <div>
         <HeaderBar handleModalOpen={this.handleModalOpen}/>
         <SimpleModalWrapper
+          selectCharacter={this.selectCharacter}
           open={this.state.modalOpen}
-          handleModalOpen={this.handleModalOpen}
           handleModalClose={this.handleModalClose}
-          characters={characters}
+          characters={this.state.characters}
         />
-        <StatsGrid />
+      <StatsGrid characters={this.state.selectedCharacters}/>
       </div>
     );
   }

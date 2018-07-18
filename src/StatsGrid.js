@@ -16,38 +16,28 @@ const styles = theme => ({
   },
 });
 
-function FullWidthGrid(props) {
-  const { classes } = props;
+class FullWidthGrid extends React.Component {
 
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={24}>
-
-        <Grid item xs={12} sm={6} lg={4}>
-          <Paper className={classes.paper}>
-            CHARACTER
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <Paper className={classes.paper}>
-            CHARACTER
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <Paper className={classes.paper}>
-            CHARACTER
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <Paper className={classes.paper}>
-            CHARACTER
-          </Paper>
-        </Grid>
+  render(){
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          {this.props.characters.map(c=>{
+            return(
+              <Grid item xs={12} sm={6} lg={4}>
+                <Paper className={classes.paper}>
+                  {c.name}
+                </Paper>
+              </Grid>
+            )
+          })}
 
 
-      </Grid>
-    </div>
-  );
+        </Grid>
+      </div>
+    );
+  }
 }
 
 FullWidthGrid.propTypes = {
