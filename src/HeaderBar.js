@@ -17,9 +17,6 @@ const styles = theme => ({
   rightIcon: {
     marginLeft: theme.spacing.unit,
   },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
 });
 
 function HeaderBar(props) {
@@ -31,7 +28,7 @@ function HeaderBar(props) {
           <Typography variant="title" color="inherit" className={classes.flex}>
             Betrayal stats
           </Typography>
-          <Button variant="contained" color="green" className={classes.button}>
+          <Button variant="contained" className={classes.button} onClick={props.handleModalOpen}>
             Add Char
             <AddIcon className={classes.rightIcon} />
           </Button>
