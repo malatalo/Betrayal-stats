@@ -27,6 +27,7 @@ const styles = theme => ({
   },
 });
 
+//TODO replace with built-in confirm dialog
 class SimpleModal extends React.Component {
 
   handleClick = char => {

@@ -2,6 +2,33 @@ import React, {Component} from 'react';
 import StatsGrid from './StatsGrid';
 import HeaderBar from './HeaderBar';
 import SimpleModalWrapper from './SimpleModalWrapper';
+import grey from '@material-ui/core/colors/grey';
+import red from '@material-ui/core/colors/red';
+
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: grey[900],
+      main: grey[900],
+      dark: grey[900],
+      contrastText: grey[100],
+    },
+    secondary: {
+      light: grey[100],
+      main: grey[200],
+      dark: grey[300],
+      contrastText: grey.A400,
+    },
+    error: {
+      light: red[300],
+      main: red[500],
+      dark: red[700],
+      contrastText: red[500],
+    },
+  },
+});
 
 class App extends Component {
   state = {
@@ -45,7 +72,7 @@ class App extends Component {
   deleteCharacter = charName => {
     //TODO take a sad confirm and make it better
     if(!window.confirm("Delete " + charName + "?")) return;
-    
+
     let selCharacters = this.state.selectedCharacters.slice(0);
     let removed = selCharacters.splice(selCharacters.findIndex(c => c.name === charName), 1)
     this.setState(prevState => ({
@@ -56,7 +83,8 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <MuiThemeProvider theme={theme}>
+      <div style={{width: '100%', height: '100vh', overflowX: 'hidden', backgroundColor: grey[800]}}>
         <HeaderBar handleModalOpen={this.handleModalOpen}/>
         <SimpleModalWrapper
           selectCharacter={this.selectCharacter}
@@ -66,6 +94,7 @@ class App extends Component {
         />
       <StatsGrid characters={this.state.selectedCharacters} deleteCharacter={this.deleteCharacter}/>
       </div>
+      </MuiThemeProvider>
     );
   }
 }

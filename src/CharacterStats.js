@@ -4,7 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
 import InfoIcon from '@material-ui/icons/Info';
 import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import StatNumbers from './StatNumbers';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   container: {
@@ -20,10 +24,23 @@ const styles = theme => ({
   title: {
     fontSize: 20,
     fontStyle: 'italic',
-    paddingTop: 20,
+    paddingTop: 10,
+    opacity: 0.5,
   },
   values: {
     fontSize: 22,
+    opacity: 0.75,
+  },
+  delete: {
+    cursor: 'pointer',
+    float: 'left'
+  },
+  info: {
+    cursor: 'help',
+    float: 'right'
+  },
+  popover: {
+    pointerEvents: 'none',
   },
 });
 
@@ -71,56 +88,71 @@ class FullWidthGrid extends React.Component {
     const open = Boolean(anchorEl);
     return (
         <div>
-        <DeleteIcon className={classes.delete} onClick={()=>this.props.deleteCharacter(name)}>delete</DeleteIcon>
-        <InfoIcon className={classes.info} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>info</InfoIcon>
-        <Popover
-          className={classes.popover}
-          classes={{
-            paper: classes.paper,
-          }}
-          open={open}
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          onClose={this.handlePopoverClose}
-          disableRestoreFocus
-        >
-          <Typography>{age}<br/>{height}<br/>{weight}<br/>{hobbies}<br/>{birthday}</Typography>
-        </Popover>
-
         <div className={classes.container}>
           <div className={classes.name}>
+          <DeleteIcon className={classes.delete} onClick={()=>this.props.deleteCharacter(name)}>delete</DeleteIcon>
+          <InfoIcon className={classes.info} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>info</InfoIcon>
+          <Popover
+            className={classes.popover}
+            classes={{
+              paper: classes.paper,
+            }}
+            open={open}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            onClose={this.handlePopoverClose}
+            disableRestoreFocus
+          >
+          <List dense>
+            <ListItem>
+              <ListItemText primary={age} secondary="age"/>
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={height} secondary="height"/>
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={weight} secondary="weight"/>
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={hobbies} secondary="hobbies"/>
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={birthday} secondary="birthday"/>
+            </ListItem>
+          </List>
+          </Popover>
             {name}
           </div>
           <div className={classes.title}>
-            Speed
+            <Paper>Speed</Paper>
           </div>
           <div className={classes.values}>
-            {speed.values}
+            <StatNumbers numbers={speed.values} default={speed.default}/>
           </div>
           <div className={classes.title}>
-            Might
+            <Paper>Might</Paper>
           </div>
           <div className={classes.values}>
-            {might.values}
+            <StatNumbers numbers={might.values} default={might.default}/>
           </div>
           <div className={classes.title}>
-            Speed
+            <Paper>Sanity</Paper>
           </div>
           <div className={classes.values}>
-            {sanity.values}
+            <StatNumbers numbers={sanity.values} default={sanity.default}/>
           </div>
           <div className={classes.title}>
-            Knowledge
+            <Paper>Knowledge</Paper>
           </div>
           <div className={classes.values}>
-            {knowledge.values}
+            <StatNumbers numbers={knowledge.values} default={knowledge.default}/>
           </div>
         </div>
       </div>
