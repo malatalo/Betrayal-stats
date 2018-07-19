@@ -48,8 +48,8 @@ class SimpleModal extends React.Component {
           <List component="nav">
             {this.props.characters.map(c=>{
               return (
-                <ListItem button key={c.name} >
-                  <ListItemText primary={c.name} onClick={()=>this.handleClick(c.name)}/>
+                <ListItem button key={c.name} onClick={()=>this.handleClick(c.name)}>
+                  <ListItemText primary={c.name} />
                 </ListItem>
               )
             })}
